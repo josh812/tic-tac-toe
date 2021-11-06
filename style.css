@@ -1,20 +1,30 @@
+html {
+    font-family: 'Nunito', sans-serif;
+}
 #board {
     display: grid;
-    grid-template-rows: 50px 50px 50px;
-    grid-template-columns: 50px 50px 50px;
-    width: 150px;
-    height: 150px;
+    grid-template-rows: 33.333% 33.333% 33.333%;
+    grid-template-columns: 33.333% 33.333% 33.333%;
     border-style: solid;
-    border-width: 1px;
+    border-width: 3px;
     border-color: black;
     border-radius: 3px;
 }
+#turn-para {
+    font-size: 4em;
+}
 .boardSquare {
-    font-size: 1.5em;
+    font-size: 5em;
     text-align: center;
     border-style: solid;
-    border-width: 1px;
+    border-width: 3px;
 }
 .boardSquare p {
     line-height: 0px;
+}
+.x {
+    color: #d30000;
+}
+.o {
+    color: #1800e1;
 }
