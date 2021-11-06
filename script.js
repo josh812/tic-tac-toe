@@ -1,5 +1,7 @@
 const container = document.querySelector('#container');
 const board = document.querySelector('#board');
+var game_active = true;
+var turn_count = 0;
 
 if(window.innerWidth >= window.innerHeight) {
     board.style.width = '75vh';
@@ -19,21 +21,32 @@ const gameBoard = (() => {
 
     function checkWinner() {
         if(boardArray[0] === boardArray[1] && boardArray[1] === boardArray[2] && boardArray[0] !== ' ') {
-            console.log(`${boardArray[0]} wins!`);
+            document.querySelector('#turn-para').textContent = `${boardArray[0]} wins!`;
+            game_active = false;
         } else if(boardArray[3] === boardArray[4] && boardArray[4] === boardArray[5] && boardArray[3] !== ' ') {
-            console.log(`${boardArray[3]} wins!`);
+            document.querySelector('#turn-para').textContent = `${boardArray[3]} wins!`;
+            game_active = false;
         } else if(boardArray[6] === boardArray[7] && boardArray[7] === boardArray[8] && boardArray[6] !== ' ') {
-            console.log(`${boardArray[6]} wins!`);
+            document.querySelector('#turn-para').textContent = `${boardArray[6]} wins!`;
+            game_active = false;
         } else if(boardArray[0] === boardArray[3] && boardArray[3] === boardArray[6] && boardArray[0] !== ' ') {
-            console.log(`${boardArray[0]} wins!`);
+            document.querySelector('#turn-para').textContent = `${boardArray[0]} wins!`;
+            game_active = false;
         } else if(boardArray[1] === boardArray[4] && boardArray[4] === boardArray[7] && boardArray[1] !== ' ') {
-            console.log(`${boardArray[1]} wins!`);
+            document.querySelector('#turn-para').textContent = `${boardArray[1]} wins!`;
+            game_active = false;
         } else if(boardArray[2] === boardArray[5] && boardArray[5] === boardArray[8] && boardArray[2] !== ' ') {
-            console.log(`${boardArray[2]} wins!`);
+            document.querySelector('#turn-para').textContent = `${boardArray[2]} wins!`;
+            game_active = false;
         } else if(boardArray[0] === boardArray[4] && boardArray[4] === boardArray[8] && boardArray[0] !== ' ') {
-            console.log(`${boardArray[0]} wins!`);
+            document.querySelector('#turn-para').textContent = `${boardArray[0]} wins!`;
+            game_active = false;
         } else if(boardArray[2] === boardArray[4] && boardArray[4] === boardArray[6] && boardArray[2] !== ' ') {
-            console.log(`${boardArray[2]} wins!`);
+            document.querySelector('#turn-para').textContent = `${boardArray[2]} wins!`;
+            game_active = false;
+        } else if(turn_count === 8) {
+            document.querySelector('#turn-para').textContent = 'Draw!';
+            game_active = false;
         }
     }
 
@@ -80,20 +93,23 @@ const displayController = (() => {
     }
 
     function fullTurn(e) {
-        if(e.target.textContent === ' ') {
-            gameBoard.markBoardSquare(turn, e.target.getAttribute('id'));
-            changeTurn(turn);
-            displayGameBoard();
-            const squares = document.querySelectorAll('.boardSquare');
-            squares.forEach(square => {
-                square.removeEventListener('click', displayController.fullTurn);
-                square.addEventListener('click', displayController.fullTurn);
-            });
+        if(game_active === true) {
+            if(e.target.textContent === ' ') {
+                gameBoard.markBoardSquare(turn, e.target.getAttribute('id'));
+                changeTurn(turn);
+                displayGameBoard();
+                const squares = document.querySelectorAll('.boardSquare');
+                squares.forEach(square => {
+                    square.removeEventListener('click', displayController.fullTurn);
+                    square.addEventListener('click', displayController.fullTurn);
+                });
+            }
+            gameBoard.checkWinner();
+            turn_count++;
         }
-        gameBoard.checkWinner();
     }
 
-    return {displayGameBoard, fullTurn};
+    return {displayGameBoard, fullTurn, game_active};
 })();
 
 
