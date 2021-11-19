@@ -44,7 +44,7 @@ const gameBoard = (() => {
         } else if(boardArray[2] === boardArray[4] && boardArray[4] === boardArray[6] && boardArray[2] !== ' ') {
             document.querySelector('#turn-para').textContent = `${boardArray[2]} wins!`;
             game_active = false;
-        } else if(turn_count === 8) {
+        } else if(turn_count === 9) {
             document.querySelector('#turn-para').textContent = 'Draw!';
             game_active = false;
         }
@@ -103,9 +103,9 @@ const displayController = (() => {
                     square.removeEventListener('click', displayController.fullTurn);
                     square.addEventListener('click', displayController.fullTurn);
                 });
+                turn_count++;
             }
             gameBoard.checkWinner();
-            turn_count++;
         }
     }
 
